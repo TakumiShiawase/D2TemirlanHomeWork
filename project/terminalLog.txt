@@ -1,0 +1,309 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\курсы\project\djangohomework> python3 -m venv venv
+Python 
+PS C:\курсы\project\djangohomework> python -m venv venv 
+PS C:\курсы\project\djangohomework> venv\scripts\activate
+(venv) PS C:\курсы\project\djangohomework> pip3 install django
+Collecting django
+  Using cached Django-4.0.4-py3-none-any.whl (8.0 MB)
+Collecting sqlparse>=0.2.2
+  Using cached sqlparse-0.4.2-py3-none-any.whl (42 kB)
+Collecting asgiref<4,>=3.4.1
+  Using cached asgiref-3.5.1-py3-none-any.whl (22 kB)
+Collecting tzdata
+  Using cached tzdata-2022.1-py2.py3-none-any.whl (339 kB)
+Installing collected packages: tzdata, sqlparse, asgiref, django
+Successfully installed asgiref-3.5.1 django-4.0.4 sqlparse-0.4.2 tzdata-2022.1
+WARNING: You are using pip version 22.0.4; however, version 22.1 is available.
+You should consider upgrading via the 'C:\курсы\project\djangohomework\venv\Scripts\python.exe -m pip install --upgrade pip' command.       
+(venv) PS C:\курсы\project\djangohomework> venv\scripts\python.exe -m pip install --upgrade pip
+Requirement already satisfied: pip in c:\курсы\project\djangohomework\venv\lib\site-packages (22.0.4)
+Collecting pip
+  Using cached pip-22.1-py3-none-any.whl (2.1 MB)
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 22.0.4
+    Uninstalling pip-22.0.4:
+      Successfully uninstalled pip-22.0.4
+Successfully installed pip-22.1
+(venv) PS C:\курсы\project\djangohomework> django-admin startproject project
+(venv) PS C:\курсы\project\djangohomework> cd project
+(venv) PS C:\курсы\project\djangohomework\project> py manage.py startapp NewsPaper
+(venv) PS C:\курсы\project\djangohomework\project> py manage.py makemigrations
+Migrations for 'NewsPaper':
+  NewsPaper\migrations\0001_initial.py
+    - Create model Author
+    - Create model Category
+    - Create model Post
+    - Create model PostCategory
+    - Add field postCategory to post
+    - Create model Comment
+(venv) PS C:\курсы\project\djangohomework\project> py manage.py migrate
+Operations to perform:
+  Apply all migrations: NewsPaper, admin, auth, contenttypes, sessions
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying NewsPaper.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK        
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying auth.0010_alter_group_name_max_length... OK
+  Applying auth.0011_update_proxy_permissions... OK
+  Applying auth.0012_alter_user_first_name_max_length... OK
+  Applying sessions.0001_initial... OK
+(venv) PS C:\курсы\project\djangohomework\project> py mange.py shell
+C:\Users\Takumi\AppData\Local\Programs\Python\Python310\python.exe: can't open file 'C:\\курсы\\project\\djangohomework\\project\\mange.py': [Errno 2] No such file or directory
+(venv) PS C:\курсы\project\djangohomework\project> py manage,py shell
+C:\Users\Takumi\AppData\Local\Programs\Python\Python310\python.exe: can't open file 'C:\\курсы\\project\\djangohomework\\project\\manage,py': [Errno 2] No such file or directory
+(venv) PS C:\курсы\project\djangohomework\project> py manage.py shell
+Python 3.10.4 (tags/v3.10.4:9d38120, Mar 23 2022, 23:13:41) [MSC v.1929 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from NewsPaper.models import *
+>>> user1 = User.project.create(username='Igor', first_name='Bondarenk
+o')
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: type object 'User' has no attribute 'project'
+>>> user1 = User.projects.create(username='Igor', first_name='Bondarenko') 
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: type object 'User' has no attribute 'projects'        
+>>> user1 = User.objects.create(username='Igor', first_name='Bondarenko')  
+>>> user2 = User.objects.create(username='Tolik', first_name='Bondarenko') 
+>>> Author.objects.create(autorUser=user1)
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "C:\курсы\project\djangohomework\venv\lib\site-packages\django\db\models\manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)        
+  File "C:\курсы\project\djangohomework\venv\lib\site-packages\django\db\models\query.py", line 512, in create
+    obj = self.model(**kwargs)
+  File "C:\курсы\project\djangohomework\venv\lib\site-packages\django\db\models\base.py", line 559, in __init__
+    raise TypeError(
+TypeError: Author() got an unexpected keyword argument 'autorUser'    
+>>> Author.objects.create(authorUser=user1)
+<Author: Author object (1)>
+>>> Author.objects.create(authorUser=user2)
+<Author: Author object (2)>
+>>> Category.objects.create(name='Sport')
+<Category: Category object (1)>
+>>> Category.objects.create(name='IT')    
+<Category: Category object (2)>
+>>> Category.objects.create(name='Auto') 
+<Category: Category object (3)>
+>>> Category.objects.create(name='Book') 
+<Category: Category object (4)>
+>>> Post.objects.create(author=Author.objects.get(authorUser=User.objects.get(username='Igor')), categoryType='NW", title='sport title', text='sport text') 
+  File "<console>", line 1
+    Post.objects.create(author=Author.objects.get(authorUser=User.objects.get(username='Igor')), categoryType='NW", title='sport title', text='sport text')
+                                                                      
+                                                                      
+             ^
+SyntaxError: unterminated string literal (detected at line 1)
+>>> Post.objects.create(author=Author.objects.get(authorUser=User.objects.get(username='Igor')), categoryType='NW", title='sport title', text='sport text')
+  File "<console>", line 1
+    Post.objects.create(author=Author.objects.get(authorUser=User.objects.get(username='Igor')), categoryType='NW", title='sport title', text='sport text')
+                                                                      
+                                                                      
+             ^
+SyntaxError: unterminated string literal (detected at line 1)
+>>> Post.objects.create(author=Author.objects.get(authorUser=User.objects.get(username'Igor')), categoryType='NW', title='sport title', text='sport text') 
+  File "<console>", line 1
+    Post.objects.create(author=Author.objects.get(authorUser=User.objects.get(username'Igor')), categoryType='NW', title='sport title', text='sport text')
+                                                                      
+                ^^^^^^
+SyntaxError: invalid syntax
+>>> Post.objects.create(author=Author.objects.get(authorUser=User.objects.get(username='Igor')), categoryType='NW', title='sport title', text='sport text') 
+<Post: Post object (1)>
+>>> Post.objects.create(author=Author.objects.get(authorUser=User.objects.get(username='Igor')), categoryType='AR', title='sport title', text='sport text') 
+<Post: Post object (2)>
+>>> Post.objects.create(author=Author.objects.get(authorUser=User.objects.get(username='Tolik')), categoryType='AR', title='sport title', text='sport text') 
+<Post: Post object (3)>
+>>> p1 = Post.objects.get(pk=1)
+>>> p2 = Post.objects.get(pk=2)
+>>> p3 = Post.objects.get(pk=3)
+>>> c1 = Category.objects.get(name='IT')
+>>> c2 = Category.objects.get(name='Auto')
+>>> c3 = Category.objects.get(name='Book')
+>>> c4 = Category.objects.get(name='Sport')
+>>> p1.postCategory.add(c1, c2)
+>>> p2.postCategory.add(c3, c4)
+>>> p3.postCategory.add(c1, c3) 
+>>> Comment.objects.create(comment.User=User.objects.get(username='Igo
+r') commentPost=Post.objects.get(pk=1), text='comment text1')
+  File "<console>", line 1
+    Comment.objects.create(comment.User=User.objects.get(username='Igor') commentPost=Post.objects.get(pk=1), text='comment text1')
+                           ^^^^^^^^^^^^^
+SyntaxError: expression cannot contain assignment, perhaps you meant "=="?
+>>> Comment.objects.create(comment.User=User.objects.get(username='Igor'), commentPost=Post.objects.get(pk=1), text='comment text1') 
+  File "<console>", line 1
+    Comment.objects.create(comment.User=User.objects.get(username='Igor'), commentPost=Post.objects.get(pk=1), text='comment text1')        
+                           ^^^^^^^^^^^^^
+SyntaxError: expression cannot contain assignment, perhaps you meant "=="?
+>>> Comment.objects.create(comment.User=User.objects.get(username='Igor'), commentPost= Post.objects.get(pk=1), text='comment text1')       
+  File "<console>", line 1
+    Comment.objects.create(comment.User=User.objects.get(username='Igor'), commentPost= Post.objects.get(pk=1), text='comment text1')       
+                           ^^^^^^^^^^^^^
+SyntaxError: expression cannot contain assignment, perhaps you meant "=="?
+>>> Comment.objects.create(commentUser=User.objects.get(username='Igor'), commentPost=Post.objects.get(pk=1), text='comment text1')         
+<Comment: Igor>
+>>> Comment.objects.create(commentUser=User.objects.get(username='Tolik'), commentPost=Post.objects.get(pk=2), text='comment text2')  
+<Comment: Tolik>
+>>> Comment.objects.create(commentUser=User.objects.get(username='Tolik'), commentPost=Post.objects.get(pk=3), text='comment text3')        
+<Comment: Tolik>
+>>> Post.objects.get(pk=1).like()
+>>> Post.objects.get(pk=1).like()
+>>> Post.objects.get(pk=1).like()
+>>> Post.objects.get(pk=1).like()
+>>> Post.objects.get(pk=1).like()
+>>> Post.objects.get(pk=1).like()
+>>> Post.objects.get(pk=1).like()
+>>> Post.objects.get(pk=1).like()
+>>> Post.objects.get(pk=1).like()
+>>> Post.objects.get(pk=2).like() 
+>>> Post.objects.get(pk=2).like()
+>>> Post.objects.get(pk=2).like()
+>>> Post.objects.get(pk=2).like()
+>>> Post.objects.get(pk=2).like()
+>>> 
+>>> Post.objects.get(pk=2).like()
+>>> Post.objects.get(pk=2).like()
+>>> Post.objects.get(pk=2).like()
+>>> Post.objects.get(pk=2).like()
+>>> Post.objects.get(pk=2).dislike() 
+>>> Post.objects.get(pk=2).dislike()
+>>> Post.objects.get(pk=2).dislike()
+>>> Post.objects.get(pk=2).dislike()
+>>> Post.objects.get(pk=3).dislike() 
+>>> Post.objects.get(pk=3).dislike()
+>>> Post.objects.get(pk=3).dislike()
+>>> 
+>>> Post.objects.get(pk=3).dislike()
+>>> Post.objects.get(pk=3).dislike()
+>>> Post.objects.get(pk=3).dislike()
+>>> Post.objects.get(pk=3).dislike()
+>>> Comment.objects.get(pk=1).like()
+>>> Comment.objects.get(pk=1).like()
+>>> Comment.objects.get(pk=1).like()
+>>> Comment.objects.get(pk=1).like()
+>>> Comment.objects.get(pk=1).like()
+>>> Comment.objects.get(pk=1).like()
+>>> Comment.objects.get(pk=1).like()
+>>> Comment.objects.get(pk=1).like()
+>>> Comment.objects.get(pk=1).like()
+>>> Comment.objects.get(pk=1).like()
+>>>
+>>> Comment.objects.get(pk=1).like()
+>>> Comment.objects.get(pk=1).like()
+>>> Comment.objects.get(pk=1).like()
+>>> Comment.objects.get(pk=1).like()
+>>> Comment.objects.get(pk=1).like()
+>>> Comment.objects.get(pk=1).like()
+>>> Comment.objects.get(pk=1).dislike() 
+>>> Comment.objects.get(pk=1).dislike()
+>>> Comment.objects.get(pk=1).dislike()
+>>> 
+>>> Comment.objects.get(pk=1).dislike()
+>>> Comment.objects.get(pk=1).dislike()
+>>> Comment.objects.get(pk=2).dislike() 
+>>> Comment.objects.get(pk=2).dislike()
+>>> Comment.objects.get(pk=2).dislike()
+>>> Comment.objects.get(pk=2).dislike()
+>>> 
+>>> Comment.objects.get(pk=2).dislike()
+>>> Comment.objects.get(pk=2).dislike()
+>>> Comment.objects.get(pk=2).dislike()
+>>> Comment.objects.get(pk=2).dislike()
+>>> Comment.objects.get(pk=2).dislike()
+>>> Comment.objects.get(pk=2).dislike()
+>>> Comment.objects.get(pk=2).dislike()
+>>> Comment.objects.get(pk=3).like()    
+>>> Comment.objects.get(pk=3).like()
+>>> 
+>>> Comment.objects.get(pk=3).like()
+>>> Comment.objects.get(pk=3).like()
+>>>
+>>> Comment.objects.get(pk=3).like()
+>>> Comment.objects.get(pk=3).like()
+>>> Comment.objects.get(pk=3).like()
+>>> Comment.objects.get(pk=3).like()
+>>> Author.objects.get(authorUser=User.objects.get(username='Igor')).u
+pdate_rating()
+>>> Author.objects.get(authorUser=User.objects.get(username='Tolik')).update_rating() 
+>>> a = Author.objects.get(authorUser=User.objects.get(username='Tolik'))                 
+>>> a.ratingAuthor
+-24
+>>> Author.objects.get(authorUser=User.objects.get(username='Tolik')).ratingAuthor   
+-24
+>>> Author.objects.get(authorUser=User.objects.get(username='Igor')).ratingAuthor  
+53
+>>> best = Author.objects.all().order_by('-ratingAuthor').values('authorUser'. 'ratingAuthor')[0] 
+  File "<console>", line 1
+    best = Author.objects.all().order_by('-ratingAuthor').values('authorUser'. 'ratingAuthor')[0]
+                                                                      
+         ^^^^^^^^^^^^^^
+SyntaxError: invalid syntax
+>>> best = Author.objects.all().order_by('-ratingAuthor').values('authorUser', 'ratingAuthor')[0] 
+>>> print(best)
+{'authorUser': 1, 'ratingAuthor': 53}
+>>> bestPost = Post.objects.all().odrer_by('-rating').values('dateCrea
+tion', 'author', 'rating', 'categoryType', 'title')[0]
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'QuerySet' object has no attribute 'odrer_by'
+>>> bestPost = Post.objects.all().oder_by('-rating').values('dateCreation', 'author', 'rating', 'categoryType', 'title')[0]  
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'QuerySet' object has no attribute 'oder_by'
+>>> bestPost = Post.objects.all().order_by('-rating').values('dateCreation', 'author', 'rating', 'categoryType', 'title')[0] 
+>>> print(bestPost)
+{'dateCreation': datetime.datetime(2022, 5, 12, 15, 24, 10, 148680, tzinfo=datetime.timezone.utc), 'author': 1, 'rating': 9, 'categoryType': 'NW', 'title': 'sport title'}
+>>> bestPost = Post.objects.all().order_by('-rating').values('dateCreation', 'author.autorUser.get(username)', 'rating', 'categoryType', 'title')[0] 
+Traceback (most recent call last):
+  File "C:\курсы\project\djangohomework\venv\lib\site-packages\django\db\models\sql\query.py", line 2107, in add_fields
+    join_info = self.setup_joins(
+  File "C:\курсы\project\djangohomework\venv\lib\site-packages\django\db\models\sql\query.py", line 1773, in setup_joins
+    path, final_field, targets, rest = self.names_to_path(
+  File "C:\курсы\project\djangohomework\venv\lib\site-packages\django\db\models\sql\query.py", line 1677, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'author.autorUser.get(username)' into field. Choices are: author, author_id, categoryType, comment, dateCreation, id, postCategory, postcategory, rating, text, title
+
+During handling of the above exception, another exception occurred:   
+
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "C:\курсы\project\djangohomework\venv\lib\site-packages\django\db\models\query.py", line 948, in values
+    clone = self._values(*fields, **expressions)
+  File "C:\курсы\project\djangohomework\venv\lib\site-packages\django\db\models\query.py", line 943, in _values
+    clone.query.set_values(fields)
+  File "C:\курсы\project\djangohomework\venv\lib\site-packages\django\db\models\sql\query.py", line 2425, in set_values
+    self.add_fields(field_names, True)
+  File "C:\курсы\project\djangohomework\venv\lib\site-packages\django\db\models\sql\query.py", line 2140, in add_fields
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'author.autorUser.get(username)' into field. Choices are: author, author_id, categoryType, comment, dateCreation, id, postCategory, postcategory, rating, text, title
+>>> bestPost = Post.objects.all().order_by('-rating').values('dateCreation', 'author', 'rating', 'categoryType', 'title')[0]>>> print(bestPost)
+{'dateCreation': datetime.datetime(2022, 5, 12, 15, 24, 10, 148680, tzinfo=datetime.timezone.utc), 'author': 1, 'rating': 9, 'categoryType': 'NW', 'title': 'sport title'}
+>>> Comment.objects.get(commentPost(pk-1)).values('dateCreation', 'commentUser', 'rating', 'text')
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+NameError: name 'commentPost' is not defined
+>>> Comment.objects.get(commentPost.pk-1).values('dateCreation', 'commentUser', 'rating', 'text')  
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+NameError: name 'commentPost' is not defined
+>>> Comment.objects.filter(pk=1).values('dateCreation', 'commentUser', 'rating', 'text')           
+<QuerySet [{'dateCreation': datetime.datetime(2022, 5, 12, 15, 37, 36, 330894, tzinfo=datetime.timezone.utc), 'commentUser': 1, 'rating': 11, 'text': 'comment text1'}]>
